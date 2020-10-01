@@ -25,15 +25,6 @@ class ListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val btn : FloatingActionButton = view.findViewById(R.id.btnDetail)
-        btn.setOnClickListener {
-            val action = ListFragmentDirections.actionGotoDetail()
-            Navigation.findNavController(it).navigate(action)
-
-        }
-    }
 
     companion object {
         @JvmStatic
