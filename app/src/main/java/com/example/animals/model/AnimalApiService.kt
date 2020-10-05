@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * are observable**/
 
 class AnimalApiService {
-    private val BASE_URL = "https://us-central1-apis-467e.cloudfunctions.net"
+    private val BASE_URL = "https://us-central1-apis-4674e.cloudfunctions.net"
     private val API = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())

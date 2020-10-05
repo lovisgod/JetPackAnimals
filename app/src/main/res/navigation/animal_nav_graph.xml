@@ -26,5 +26,8 @@
             app:destination="@id/listFragment"
             app:popUpTo="@id/detailFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="animal"
+            app:argType="com.example.animals.model.Animal" />
     </fragment>
 </navigation>

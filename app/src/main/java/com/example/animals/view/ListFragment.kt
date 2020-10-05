@@ -63,7 +63,7 @@ class ListFragment : Fragment() {
                 animalList.visibility = View.GONE
                 loadingError.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
-                viewmodel.refresh()
+                viewmodel.hardRefresh()
                 this.isRefreshing = false
             }
         }
