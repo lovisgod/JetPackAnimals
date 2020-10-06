@@ -4,6 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.animals.di.AppModule
+import com.example.animals.di.CONTEXT_APP
+import com.example.animals.di.DaggerViewModelComponent
+import com.example.animals.di.TypeOfContext
 import com.example.animals.model.Animal
 import com.example.animals.model.AnimalApiService
 import com.example.animals.model.ApiKey
@@ -13,8 +17,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class ListViewModel(application: Application): AndroidViewModel(application) { // the reason for using android viewModel and not just viewModel is to be able to access context
+
+    constructor(application: Application, test: Boolean = true): this(application) {
+        injected = true
+    }
 
     val animals by lazy { MutableLiveData<List<Animal>> () } // lazy means that the system will not instatiate the livedata variable until when it's needed.
     val loadError by lazy { MutableLiveData<Boolean> () }
@@ -26,16 +35,36 @@ class ListViewModel(application: Application): AndroidViewModel(application) { /
      * we will still have a link to the observable and we have a memory leak
      * we clear this links using disposables**/
     private val disposable = CompositeDisposable()
+    private var injected = false
 
-    private val api = AnimalApiService()
+    @Inject
+    lateinit var api: AnimalApiService
 
-    private val prefs = SharedPrefHelper(getApplication())
+    @Inject
+    @field:TypeOfContext(CONTEXT_APP) // this help us to choose the context or type that we want
+    lateinit var prefs : SharedPrefHelper
 
     private var invalidApiKey = false
 
 
+    fun inject() {
+        /**We use builder so that we can be able to pass in the context
+         * into the AppModule class**/
+        if (!injected) {
+
+            DaggerViewModelComponent.builder()
+                .appModule(AppModule(getApplication()))
+                .build()
+                .inject(this)
+        }
+    }
+
+
+
+
 
     fun refresh() {
+        inject()
         invalidApiKey = false
         loading.value = true
         val key = prefs.getApiKey()
@@ -47,6 +76,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) { /
     }
 
     fun hardRefresh() {
+        inject()
         loading.value = true
         getKey()
     }

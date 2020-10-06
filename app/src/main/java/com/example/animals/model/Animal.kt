@@ -126,3 +126,7 @@ data class Speed(
         }
     }
 }
+
+data class AnimalPalette(
+    val backGroundColor: Int
+)

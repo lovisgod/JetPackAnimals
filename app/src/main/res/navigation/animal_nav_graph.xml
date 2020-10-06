@@ -12,9 +12,7 @@
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_goto_detail"
-            app:destination="@id/detailFragment"
-            app:popUpTo="@id/listFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -23,9 +21,7 @@
         tools:layout="@layout/fragment_detail" >
         <action
             android:id="@+id/action_goto_list"
-            app:destination="@id/listFragment"
-            app:popUpTo="@id/detailFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/listFragment" />
         <argument
             android:name="animal"
             app:argType="com.example.animals.model.Animal" />
